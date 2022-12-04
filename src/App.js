@@ -37,7 +37,6 @@ function App() {
     const totalSupply = await realEstate.totalSupply();
 
     const homes = [];
-
     for (var i = 1; i <= totalSupply; i++) {
       const uri = await realEstate.tokenURI(i);
       const response = await fetch(uri);
@@ -66,6 +65,11 @@ function App() {
     loadBlockchainData();
   }, []);
 
+  const togglePop = (home) => {
+    setHome(home);
+    toggle ? setToggle(false) : setToggle(true);
+  };
+
   return (
     <div>
       <Navigation account={account} setAccount={setAccount} />
@@ -77,7 +81,7 @@ function App() {
         <div className="cards">
           {homes.map((home, index) => {
             return (
-              <div className="card" key={index}>
+              <div className="card" key={index} onClick={() => togglePop(home)}>
                 <div className="card__image">
                   <img src={home.image} alt="home" />
                 </div>
@@ -95,6 +99,15 @@ function App() {
           })}
         </div>
       </div>
+      {toggle && (
+        <Home
+          home={home}
+          provider={provider}
+          escrow={escrow}
+          togglePop={togglePop}
+          account={account}
+        />
+      )}
     </div>
   );
 }
