@@ -1,4 +1,3 @@
-import { ethers } from 'ethers';
 import { useEffect, useState } from 'react';
 
 import close from '../assets/close.svg';
@@ -96,7 +95,6 @@ const Home = ({ home, provider, account, escrow, togglePop }) => {
     await signer.sendTransaction({
       to: escrow.address,
       value: lendAmount.toString(),
-      gasLimit: 60000,
     });
 
     setHasLended(true);
